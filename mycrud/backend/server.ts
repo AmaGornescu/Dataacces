@@ -24,6 +24,7 @@
 import dotenv from 'dotenv';
 import express, { Express, Request, Response } from 'express';
 import * as bodyParser from "body-parser";
+import fileUpload from 'express-fileupload';
 import {userRouter} from "./routes/userRouter";
 import cors from 'cors';
 import path from 'path';
@@ -34,6 +35,7 @@ app.use(express.urlencoded({ extended: true }))
 const port = process.env.PORT;
 app.use(cors());
 app.use(bodyParser.json());
+app.use(fileUpload());
 
 app.use("/users", userRouter);
 app.get('/', (req: Request, res: Response) => {

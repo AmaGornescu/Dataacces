@@ -4,7 +4,7 @@ exports.deleteUser = exports.update = exports.create = exports.findOne = exports
 const db_1 = require("../db");
 // Get all users
 const findAll = (callback) => {
-    const queryString = `SELECT * FROM jsusers`;
+    const queryString = `SELECT id, prenume, nume, email, datanastere, telefon, poza, dataadaugare FROM jsusers`;
     db_1.db.query(queryString, (err, result) => {
         if (err) {
             callback(err);
@@ -20,6 +20,7 @@ const findAll = (callback) => {
                 datanastere: row.datanastere,
                 telefon: row.telefon,
                 dataadaugare: row.dataadaugare,
+                poza: row.poza,
                 actiune: "",
             };
             users.push(user);
@@ -51,9 +52,9 @@ const findOne = (userId, callback) => {
 exports.findOne = findOne;
 // create user
 const create = (user, callback) => {
-    const queryString = "INSERT INTO jsusers (nume, prenume, email, datanastere, telefon) VALUES (?, ?, ?, ?, ?)";
+    const queryString = "INSERT INTO jsusers (nume, prenume, email, datanastere, telefon, poza) VALUES (?, ?, ?, ?, ?, ?)";
     console.log(user);
-    db_1.db.query(queryString, [user.nume, user.prenume, user.email, user.datanastere, user.telefon], (err, result) => {
+    db_1.db.query(queryString, [user.nume, user.prenume, user.email, user.datanastere, user.telefon, user.poza], (err, result) => {
         if (err) {
             callback(err);
         }

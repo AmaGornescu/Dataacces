@@ -47,6 +47,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const bodyParser = __importStar(require("body-parser"));
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const userRouter_1 = require("./routes/userRouter");
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
@@ -56,6 +57,7 @@ app.use(express_1.default.urlencoded({ extended: true }));
 const port = process.env.PORT;
 app.use((0, cors_1.default)());
 app.use(bodyParser.json());
+app.use((0, express_fileupload_1.default)());
 app.use("/users", userRouter_1.userRouter);
 app.get('/', (req, res) => {
     // res.send('Express + TypeScript Server');

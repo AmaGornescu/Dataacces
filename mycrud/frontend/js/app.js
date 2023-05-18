@@ -54,6 +54,10 @@ $(document).ready(function ($) {
                 { "data": "prenume" },
                 { "data": "email" },
                 { "data": "telefon" },
+                { "data": "poza",
+            render:function(myphoto){
+                return '<img style="max-width:100px" src="../backend/dist/uploads/'+myphoto + '"/>';
+            } },
                 {
                     "data": "datanastere",
                     render: $.fn.dataTable.render.moment('YYYY-MM-DDTHH:mm:ss.SSSSZ','YYYY-MM-DD' ) //libraria moment ca sa-mi convertesc
@@ -131,9 +135,11 @@ $(document).ready(function ($) {
     $('#userInserUpdateForm').submit(function () {
         // ajax
         var idValue = document.getElementById("id").value;
-        var nume = document.getElementById("lname").value;
-        var prenume = document.getElementById("fname").value;
-        alert(idValue == '');
+        // var form = document.getElementById('userInserUpdateForm');
+        var form = $('#userInserUpdateForm');
+        // var nume = document.getElementById("lname").value;
+        // var prenume = document.getElementById("fname").value;
+        // alert(idValue == '');
         console.log('am id', idValue);
         let method = 'POST';
         let urlReq = "http://localhost:3002/users/"
@@ -141,21 +147,26 @@ $(document).ready(function ($) {
             method = 'PUT';
             urlReq = "http://localhost:3002/users/" + idValue;
         }
-        else {
-            idValue
-        }
-        alert(method);
-        alert(urlReq);
+        // else {
+        //     idValue
+        // }
+        // alert(method);
+        // alert(urlReq);
+        var formData = new FormData(form[0]);   //e un obiect predefinit in jquery
         $.ajax({
 
             type: method,
             url: urlReq,
-            data: $(this).serialize(), // get all form field value in 
+            // data: $(this).serialize(), // get all form field value in 
             // data:{
             //     nume:nume,
             //     prenume:prenume,
             //     id:idValue
             // },
+            data:formData,
+            contentType: false, //this is required
+            processData:false, //this is required
+            cache:false,
             dataType: 'json',
             success: function (res) {
                 console.log('am primit', res);
@@ -166,8 +177,8 @@ $(document).ready(function ($) {
                 console.log("Error: " + errorThrown + textStatus);
             },
             complete: function () {
-                $('#user-model').modal('hide');
-                window.location.reload();
+                // $('#user-model').modal('hide');
+                // window.location.reload();
             }
         });
     });

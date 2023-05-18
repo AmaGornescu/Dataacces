@@ -3,7 +3,7 @@ import { db } from "../db";
 import { OkPacket, RowDataPacket } from "mysql2";
 // Get all users
 export const findAll = (callback: Function) => {
-  const queryString = `SELECT * FROM jsusers`;
+  const queryString = `SELECT id, prenume, nume, email, datanastere, telefon, poza, dataadaugare FROM jsusers`;
   db.query(queryString, (err, result) => {
     if (err) {
       callback(err);
@@ -19,6 +19,7 @@ export const findAll = (callback: Function) => {
         datanastere: row.datanastere,
         telefon: row.telefon,
         dataadaugare: row.dataadaugare,
+        poza: row.poza,
         actiune: "",
       };
       users.push(user);
@@ -50,11 +51,11 @@ export const findOne = (userId: number, callback: Function) => {
 // create user
 export const create = (user: User, callback: Function) => {
   const queryString =
-    "INSERT INTO jsusers (nume, prenume, email, datanastere, telefon) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO jsusers (nume, prenume, email, datanastere, telefon, poza) VALUES (?, ?, ?, ?, ?, ?)";
     console.log(user);
   db.query(
     queryString,
-    [user.nume, user.prenume, user.email, user.datanastere, user.telefon],
+    [user.nume, user.prenume, user.email, user.datanastere, user.telefon, user.poza],
     (err, result) => {
       if (err) {
         callback(err);

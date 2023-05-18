@@ -7,6 +7,7 @@ export interface BasicUser {
     datanastere:Date, //string
     email:string,
     telefon: string,
+    poza?:string,
     dataadaugare?:Date,
     actiune?:string
   }
